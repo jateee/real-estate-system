@@ -1,0 +1,505 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | WalBrand.Inn</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+
+
+        /* Navbar with solid dark blue */
+        .navbar {
+            background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-overlay {
+            background-color: rgba(0, 0, 0, 0.65);
+            color: white;
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 850px;
+            margin: auto;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hero-overlay:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Primary Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #1E90FF, #4da6ff);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #1E90FF);
+        }
+
+        /* Dashboard Button */
+        .btn-success {
+            background: linear-gradient(135deg, #1E90FF, #4da6ff);
+            border: none;
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #0056b3, #1E90FF);
+        }
+
+        .btn-lg {
+            border-radius: 30px;
+            padding: 0.7rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-lg:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 16px rgba(0,0,0,0.35);
+        }
+
+        /* Footer styles */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: #ddd;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: #4da6ff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+
+        /* Cookie consent styles */
+        .cookie-consent {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 9999;
+            max-width: 900px;
+            margin: auto;
+        }
+        .hidden { display: none; }
+        .cookie-consent a { color: #4da6ff; text-decoration: underline; }
+        .cookie-consent a:hover { color: #1E90FF; }
+
+
+        .impact-card {
+    background: linear-gradient(135deg, #1E90FF, #4da6ff);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+}
+
+.impact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.impact-icon {
+    font-size: 3rem;
+    color: #fff;
+}
+
+#vision-section {
+    background: rgba(30, 144, 255, 0.6);
+    padding: 60px 0;
+    color: #fff;
+}
+
+/* Heading */
+#vision-section h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* Paragraph */
+#vision-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #e0e0e0; /* softer white for readability */
+}
+
+/* Row container */
+#vision-section .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#find-home-section {
+    background: url("../images/Capture9.PNG") no-repeat center center;
+    background-size: cover;   /* makes it stretch to fill */
+    padding: 60px 0;
+    position: relative;
+    color: #fff;
+}
+
+/* Optional overlay to improve text readability */
+#find-home-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 144, 255, 0.6); /* semi-transparent overlay */
+    z-index: 1;
+}
+
+/* Ensure text and content are above overlay */
+#find-home-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+#find-home-section img {
+    height: 550px;      /* set a uniform height */
+    width: 100%;        /* full width */
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+#find-home-section img:hover {
+    transform: scale(1.05); /* zoom effect on hover */
+}
+        
+    </style>
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="#">WalBrand.Inn</a>
+            <div class="ms-auto">
+             <a href="{% url 'index' %}" class="btn btn-outline-light btn-sm me-2">Home Page</a>
+             <a href="{% url 'interior_fitting' %}" class="btn btn-outline-light btn me-2">Interior Fittings</a>
+             <a href="{% url 'investment_education' %}" class="btn btn-outline-light btn-sm me-2">Invest With Us</a>
+             <a href="{% url 'faq' %}" class="btn btn-outline-light btn-sm me-2">FAQs</a>
+             <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+                    <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+                    <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+                {% else %}
+                    
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container d-flex flex-column align-items-center justify-content-center text-center py-5" style="min-height: 85vh;">
+        <div class="hero-overlay shadow-lg">
+            <h1 class="display-4 mb-3">Welcome to WalBrand.Inn </h1>
+            <p class="lead mb-4">
+                “An innovative digital platform that seamlessly bridges the gap between property seekers and providers, 
+                making real estate connections faster, easier, and more accessible while ensuring a smooth, reliable, 
+                and transparent experience.”
+            </p>
+
+            {% if not user.is_authenticated %}
+                <div>
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-2">Get Started</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">Login</a>
+                </div>
+            {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+
+
+<section id="find-home-section" class="py-5 text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">Find a Home With Us</h2>
+        <div class="row g-4 justify-content-center">
+            <p class="text-gray-600 leading-relaxed">
+                Discover your perfect home with ease. Explore verified listings, compare options, 
+                and connect with trusted agents—all in one place. Your journey to the right home 
+                starts here.
+            </p>
+
+            <!-- First Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best1.PNG' %}" class="img-fluid fixed-img rounded-4 shadow-lg" alt="Home 1">
+                <h5 class="fw-bold">Luxury Villa</h5>
+                <p class="text-gray-600">Elegant villa with premium finishes, private spaces, and resort-style living.</p>
+            </div>
+
+            <!-- Second Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best2.PNG' %}" class="img-fluid fixed-image rounded-4 shadow-lg" alt="Home 2">
+                <h5 class="fw-bold">Modern Apartment</h5>
+                <p class="text-gray-600">Stylish apartment with open layouts and city views for urban living</p>
+            </div>
+
+            <!-- Third Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best3.PNG' %}" class="img-fluid fixed-image rounded-4 shadow-lg" alt="Home 3">
+                <h5 class="fw-bold">Family House</h5>
+                <p class="text-gray-600">A sleek modern home with clean lines, open spaces, and natural light for contemporary living</p>
+            </div>
+
+
+            <!-- Fourth Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best4.PNG' %}" class="img-fluid  fixed-image rounded-4 shadow-lg" alt="Home 1">
+                <h5 class="fw-bold">Cottage</h5>
+                <p class="text-gray-600">Charming and full of character combinining traditional architecture with cozy interior and a warm inviting atmosphere.</p>
+            </div>
+
+            <!-- Fifth Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best5.PNG' %}" class="img-fluid fixed-image rounded-4 shadow-lg" alt="Home 1">
+                <h5 class="fw-bold">Vacation Home</h5>
+                <p class="text-gray-600">Your getaway destination designed to be relaxing retreats, offering scenic views, comfortable layouts, and a homely atmosphere. Perfect for seasonal escapes with family and friends.</p>
+            </div>
+
+            <!-- Sixth Image -->
+            <div class="col-md-4">
+                <img src="{% static 'images/best6.PNG' %}" class="img-fluid fixed-image rounded-4 shadow-lg" alt="Home 1">
+                <h5 class="fw-bold">Mansion</h5>
+                <p class="text-gray-600">Grand, elegant, and built for luxury features expansive floor plans, multiple living spaces, exquisite architecture, and premium amenities such as home theaters, gyms, and landscaped gardens.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section id="vision-section" class="py-5 text-white">
+    <div class="container text-center">
+          <h2 class="fw-bold mb-5">Our Vision</h2>
+           <div class="row g-4 justify-content-center">
+          <p class="text-gray-600 leading-relaxed">To redefine real estate by building a trusted, tech-driven platform that empowers people to find homes, make informed investments, and connect across a thriving property community.</p>
+        </div>
+    </div>
+</section>   
+
+
+<section id="vision-section" class="py-5 text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">Our Mission</h2>
+        <div class="row g-4 justify-content-center">
+        <p class="text-gray-600 leading-relaxed">To simplify the way people discover, buy, rent, and sell properties by providing transparent information, innovative technology, and trusted connections—empowering individuals and businesses to make confident real estate decisions.</p>
+        </div>
+    </div>
+</section>    
+
+
+
+
+<section id="impact-section" class="py-5 text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">Our Impact</h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Clients -->
+            <div class="col-md-4">
+                <div class="impact-card p-5 rounded-4 shadow-lg">
+                    <i class="bi bi-people-fill impact-icon mb-3"></i>
+                    <h3 class="display-4 fw-bold" id="clients-counter">{{ total_clients }}</h3>
+                    <p class="mb-0 fs-5">Clients</p>
+                </div>
+            </div>
+            <!-- Countries -->
+            <div class="col-md-4">
+                <div class="impact-card p-5 rounded-4 shadow-lg">
+                    <i class="bi bi-globe impact-icon mb-3"></i>
+                    <h3 class="display-4 fw-bold" id="countries-counter">{{ total_countries }}</h3>
+                    <p class="mb-0 fs-5">Countries</p>
+                </div>
+            </div>
+            <!-- Services -->
+            <div class="col-md-4">
+                <div class="impact-card p-5 rounded-4 shadow-lg">
+                    <i class="bi bi-briefcase-fill impact-icon mb-3"></i>
+                    <h3 class="display-4 fw-bold" id="services-counter">{{ total_services }}</h3>
+                    <p class="mb-0 fs-5">Services Offered</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  
+
+    <!-- Bootstrap Icons + JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- Cookie Consent && Our impact Script-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+   
+
+    // Animated Counters on Scroll
+    const counters = [
+        {id: 'clients-counter', value: parseInt('{{ total_clients|default:"120" }}'), start: 0, plus: true}, 
+        {id: 'countries-counter', value: parseInt('{{ total_countries|default:"5" }}'), start: 0, plus: false},
+        {id: 'services-counter', value: parseInt('{{ total_services|default:"25" }}'), start: 0, plus: true}
+    ];
+
+    const counterSection = document.getElementById('impact-section'); 
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                counters.forEach(counter => {
+                    const el = document.getElementById(counter.id);
+                    const start = counter.start;
+                    const end = counter.value;
+                    const duration = 2000; // 2 seconds
+                    const showPlus = counter.plus;
+                    let startTime = null;
+
+                    function animateNumber(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
+                        let current = Math.floor(progress * (end - start) + start);
+                        el.textContent = showPlus ? `${current}+` : current;
+                        if (progress < 1) {
+                            requestAnimationFrame(animateNumber);
+                        } else {
+                            el.textContent = showPlus ? `${end}+` : end;
+                        }
+                    }
+
+                    requestAnimationFrame(animateNumber);
+                });
+
+                observer.unobserve(counterSection); 
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(counterSection);
+});
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,456 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | WolBrand</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+ <style>
+  @keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+  }
+
+  body {
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    animation: moveBackgroundVertical 40s linear infinite;
+  }
+
+  .navbar {
+    background: linear-gradient(90deg, #0056b3, #00c6ff);
+  }
+
+  .property-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: auto;          /* adjusts to screen/content */
+    min-height: 350px;     /* keeps cards visually consistent on mobile */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .property-card .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .property-img {
+    width: 100%;
+    height: 200px;        /* fixed image height for uniform cards */
+    object-fit: cover;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+  }
+
+  .property-card .card-text {
+    font-size: 0.9rem; 
+    color: #6c757d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;     /* limit description to 3 lines */
+    -webkit-box-orient: vertical;
+  }
+
+  .property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  .btn-gradient {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: #fff;
+    border: none;
+    transition: background 0.3s ease;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(90deg, #0056b3, #0096c7);
+  }
+
+  footer {
+    background: rgba(0, 0, 0, 0.9);
+    color: #ddd;
+    padding: 2rem 0;
+    margin-top: 3rem;
+  }
+
+  footer a {
+    color: #4da6ff;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: #1E90FF;
+  }
+
+  .social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 1.4rem;
+    color: #4da6ff;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: #1E90FF;
+  }
+
+  .social-icons a .bi-whatsapp { color: #25D366; font-size: 1.5rem; transition: color 0.3s; }
+  .social-icons a .bi-whatsapp:hover { color: #128C7E; }
+
+  .social-icons a .bi-twitter { color: #1DA1F2; }
+  .social-icons a .bi-twitter:hover { color: #0d8ddb; }
+
+  .social-icons a .bi-instagram { color: #E4405F; }
+  .social-icons a .bi-instagram:hover { color: #d62a52; }
+
+  .social-icons a .bi-linkedin { color: #0077B5; }
+  .social-icons a .bi-linkedin:hover { color: #005582; }
+
+  .modal-blue-gradient .modal-content {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: #fff;
+    border: none;
+  }
+
+  .modal-blue-gradient .modal-header,
+  .modal-blue-gradient .modal-footer {
+    border: none;
+  }
+
+  .modal-blue-gradient .btn-close {
+    filter: brightness(0) invert(1);
+  }
+
+  .alert {
+    transition: opacity 1s ease-out, visibility 1s ease-out;
+  }
+
+  .alert.fade-out {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+
+.sidebar-custom {
+  background-color: #0056b3 !important; /* overrides Bootstrap */
+  color: white;
+}
+
+.sidebar-custom .offcanvas-header,
+.sidebar-custom .offcanvas-body {
+  color: white;
+}
+
+ </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <button class="btn btn-outline-light btn-sm me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <a class="navbar-brand fw-bold fs-4" href="#">WalBrand.Inn</a>
+
+    <div class="ms-auto">
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Messages -->
+{% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- Sidebar -->
+<div class="offcanvas offcanvas-start sidebar-custom" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    {% if user.is_authenticated %}
+      <a href="{% url 'myprofile' %}" class="btn btn-outline-light w-100 mb-2">My Profile</a>
+      <a href="{% url 'my_cart' %}" class="btn btn-outline-light w-100 mb-2">My Cart</a>
+      <a href="{% url 'my_bids' %}" class="btn btn-outline-light w-100 mb-2">My Bids</a>
+      <a href="{% url 'property_development' %}" class="btn btn-outline-light w-100 mb-2">Property Development</a>
+    
+      <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container my-5">
+
+  <!-- My Properties -->
+  <section class="my-items mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold text-white">My Properties</h3>
+      <a href="{% url 'sell' %}" class="btn btn-light">
+        <i class="bi bi-plus-circle me-1"></i> List New Property
+      </a>
+    </div>
+
+    {% if my_items %}
+      <div class="row g-4">
+        {% for item in my_items %}
+          <div class="col-sm-6 col-md-4 col-lg-3 d-flex">
+            <div class="card h-100 shadow-lg border-0 rounded-3 property-card flex-fill">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top property-img" alt="{{ item.title }}">
+              {% endif %}
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold text-primary">{{ item.title }}</h5>
+                <p class="card-text text-muted">{{ item.description }}</p>
+                <p><strong>Price:</strong> USD {{ item.price }}</p>
+                <p><strong>Final Price:</strong> USD {{ item.final_price }}</p>
+                <p><strong>Category:</strong> {{ item.category }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <p><strong>House Type:</strong> {{ item.house_type }}</p>
+                <p><strong>Status:</strong> <span class="badge bg-info">Your Listing</span></p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-light">You haven’t posted any Property yet.</p>
+      <div class="text-center mt-3">
+        <a href="{% url 'sell' %}" class="btn btn-light">
+          <i class="bi bi-plus-circle me-1"></i> List Your First Property
+        </a>
+      </div>
+    {% endif %}
+  </section>
+
+
+
+      <!-- For my Properties Pagination Controls -->
+      <div class="d-flex justify-content-center mt-4">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {% if my_items.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_my={{ my_items.previous_page_number }}">&laquo; Prev</a>
+        </li>
+      {% endif %}
+
+      {% for num in my_items.paginator.page_range %}
+        <li class="page-item {% if my_items.number == num %}active{% endif %}">
+          <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_my={{ num }}">{{ num }}</a>
+        </li>
+      {% endfor %}
+
+      {% if my_items.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_my={{ my_items.next_page_number }}">Next &raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
+
+  <!-- Marketplace for Properties (FIXED) -->
+  <section class="marketplace my-5">
+    <h3 class="text-center mb-4 fw-bold text-white">Properties</h3>
+
+    <!-- Search -->
+    <div class="container my-4">
+      <form method="GET" action="{% url 'dashboard' %}" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" name="query" class="form-control" placeholder="Search..." value="{{ request.GET.query }}">
+        </div>
+        <div class="col-md-3">
+          <select name="property_type" class="form-select">
+            <option value="">All Types</option>
+            <option value="apartment" {% if request.GET.property_type == "apartment" %}selected{% endif %}>Apartment</option>
+            <option value="house" {% if request.GET.property_type == "house" %}selected{% endif %}>House</option>
+            <option value="office" {% if request.GET.property_type == "office" %}selected{% endif %}>Office</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="{{ request.GET.max_price }}">
+        </div>
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Properties Grid -->
+    {% if all_items %}
+      <div class="row g-4">
+        {% for item in all_items %}
+          <div class="col-sm-6 col-md-4 col-lg-3 d-flex">
+            <div class="card h-100 shadow-lg border-0 rounded-3 property-card flex-fill">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top property-img" alt="{{ item.title }}">
+              {% endif %}
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold text-primary">{{ item.title }}</h5>
+                <p class="card-text text-muted">{{ item.description }}</p>
+                <p><strong>Asking Price:</strong> {% if item.final_price %}USD {{ item.final_price }}{% else %}N/A{% endif %}</p>
+                <p><strong>Location:</strong> {{ item.location|default:"N/A" }}</p>
+                <p><strong>Owner:</strong> {{ item.user.username }}
+                  {% if item.user.profile.verified %}
+                    <span class="badge bg-primary">Verified</span>
+                  {% else %}
+                    <span class="badge bg-secondary">Not Verified</span>
+                  {% endif %}
+                </p>
+                <div class="mt-auto">
+                  <button type="button" class="btn btn-gradient w-100" data-bs-toggle="modal" data-bs-target="#itemModal{{ item.id }}">
+                    View Details
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal (expanded naturally & scrollable if needed) -->
+          <div class="modal fade" id="itemModal{{ item.id }}" tabindex="-1" aria-labelledby="itemModalLabel{{ item.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content rounded-4 shadow-lg">
+                <div class="modal-header bg-gradient text-white">
+                  <h5 class="modal-title" id="itemModalLabel{{ item.id }}">{{ item.title }}</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  {% if item.image %}
+                    <img src="{{ item.image.url }}" class="img-fluid rounded mb-3" alt="{{ item.title }}">
+                  {% endif %}
+                  <h5 class="card-title fw-bold text-primary">{{ item.title }}</h5>
+                  <p class="card-text text-muted">{{ item.description }}</p>
+                  {% if item.category %}
+                  <p class="mb-2"><strong class="text-dark">Category:</strong> <span class="text-dark fw-normal">{{ item.category }}</span></p>
+                  {% endif %}
+                  {% if item.location %}
+                  <p class="mb-2"><strong class="text-dark">Location:</strong> <span class="text-dark fw-normal">{{ item.location }}</span></p>
+                  {% endif %}
+                  {% if item.house_type %}
+                  <p class="mb-2"><strong class="text-dark">House Type:</strong> <span class="text-dark fw-normal">{{ item.house_type }}</span></p>
+                  {% endif %}
+                  {% if item.final_price %}
+                  <p class="mb-2"><strong class="text-dark">Asking Price:</strong> <span class="text-dark fw-normal">Usd {{ item.final_price }}</span></p>
+                  {% endif %}
+                  
+                  <p class="mb-2"><strong  class="text-dark">Owner:</strong>  <span class="text-dark fw-normal">{{ item.user.username }}</span>
+                    {% if item.user.profile.verified %}
+                      <span class="badge bg-primary">Verified</span>
+                    {% else %}
+                      <span class="badge bg-secondary">Not Verified</span>                    
+                    {% endif %}
+                  </p>
+                  {% if item.is_sold %}
+                      <span class="badge bg-danger">Sold</span>
+                    {% else %}
+                      <span class="badge bg-success">Available</span>
+                    {% endif %}
+                  
+                </div>
+                <div class="modal-footer flex-wrap">
+                  <form method="POST" action="{% url 'place_bid' item.id %}" class="d-flex me-3">
+                    {% csrf_token %}
+                    <input type="number" name="amount" min="1" step="0.01" placeholder="Enter bid" class="form-control me-2" required>
+                    <button type="submit" class="btn btn-primary">Bid</button>
+                  </form>
+                  <a href="{% url 'add_to_cart' item.id %}" class="btn btn-success me-3">
+                    <i class="bi bi-cart-plus"></i> Add to Cart
+                  </a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+
+      <!-- For all Properties Pagination Controls -->
+<div class="d-flex justify-content-center mt-4">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {% if all_items.has_previous %}
+        <li class="page-item">
+         <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_all={{ all_items.previous_page_number }}">&laquo; Prev</a>
+        </li>
+      {% endif %}
+
+      {% for num in all_items.paginator.page_range %}
+        <li class="page-item {% if all_items.number == num %}active{% endif %}">
+          <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_all={{ num }}">{{ num }}</a>
+        </li>
+      {% endfor %}
+
+      {% if all_items.has_next %}
+        <li class="page-item">
+           <a class="page-link" href="?query={{ request.GET.query }}&property_type={{ request.GET.property_type }}&max_price={{ request.GET.max_price }}&page_all={{ all_items.next_page_number }}">Next &raquo;</a>
+        </li>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
+      
+    {% else %}
+      <p class="text-center text-light">No properties listed currently.</p>
+    {% endif %}
+  </section>
+</div>
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="container text-center">
+    <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+    <p class="mb-2">
+      <a href="{% url 'contactus' %}">Contact Us</a> |  
+      <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+      <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+    </p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+      </a>
+      <a href="#" title="Twitter"><i class="bi bi-twitter"></i></a>
+      <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

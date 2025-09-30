@@ -1,0 +1,314 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Development & Renovation | WolBrand.Inn</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <style>
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+    .navbar {
+      background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    .hero-overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: 20px;
+      padding: 3rem;
+      max-width: 950px;
+      margin: auto;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      font-weight: bold;
+      color: #4da6ff;
+    }
+    label {
+      color: #87cefa;
+    }
+    .form-control, .form-select {
+      border: 2px solid #4da6ff;
+      border-radius: 12px;
+    }
+    .btn-primary {
+      background-color: #1E90FF;
+      border: none;
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      transition: background 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ddd;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #4da6ff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #1E90FF;
+    }
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4" href="{% url 'index' %}">WolBrand.Inn</a>
+      <div class="ms-auto">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+        
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-light btn-sm me-2">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+ {% if messages %}
+  <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 1055; min-width: 300px;">
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show text-center shadow-lg" role="alert" id="success-alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+<form action="{% url 'property_development' %}" method="post">
+  {% csrf_token %}
+  <!-- form fields here -->
+</form>
+
+
+  <!-- Hero Form Section -->
+  <div class="container py-5">
+    <div class="hero-overlay">
+      <h1 class="text-center mb-4">Property Development & Renovation</h1>
+      <p class="lead text-center mb-5">Select your property type and tell us what you’d like to renovate or develop.</p>
+
+      <form action="{% url 'property_development' %}" method="post">
+        {% csrf_token %}
+
+        <!-- Property Type -->
+        <div class="mb-4">
+          <label for="property_type" class="form-label fw-bold">Property Type</label>
+          <select id="property_type" name="property_type" required class="form-select form-select-lg">
+            <option value="" disabled selected>-- Select Property Type --</option>
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+            <option value="land">Land</option>
+          </select>
+        </div>
+
+        <!-- Residential Options -->
+        <div id="residential-options" class="mb-4 d-none">
+          <label for="residential_type" class="form-label fw-bold">Residential Type</label>
+          <select id="residential_type" name="residential_type" class="form-select">
+            <option value="" disabled selected>-- Select Residential Type --</option>
+            <option value="townhouse">Town House</option>
+            <option value="villa">Villa</option>
+            <option value="apartment">Apartment</option>
+            <option value="duplex">Duplex</option>
+            <option value="bungalow">Bungalow</option>
+            <option value="flat">Flat</option>
+            <option value="single_family">Single Family Home</option>
+          </select>
+        </div>
+
+        <!-- Commercial Options -->
+        <div id="commercial-options" class="mb-4 d-none">
+          <label for="commercial_type" class="form-label fw-bold">Commercial Type</label>
+          <select id="commercial_type" name="commercial_type" class="form-select">
+            <option value="" disabled selected>-- Select Commercial Type --</option>
+            <option value="office">Office</option>
+            <option value="warehouse">Warehouse</option>
+            <option value="hospitality">Hospitality</option>
+            <option value="hotel">Hotel</option>
+            <option value="retail">Retail</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="mall">Shopping Mall</option>
+          </select>
+        </div>
+
+        <!-- Land Options -->
+        <div id="land-options" class="mb-4 d-none">
+          <label for="land_type" class="form-label fw-bold">Land Type</label>
+          <select id="land_type" name="land_type" class="form-select">
+            <option value="" disabled selected>-- Select Land Type --</option>
+            <option value="farm">Farm</option>
+            <option value="plot">Plot</option>
+            <option value="raw_land">Raw Land for Development</option>
+          </select>
+        </div>
+
+        <!-- User Details -->
+        <div class="mb-4">
+          <label for="full_name" class="form-label fw-bold">Your Name</label>
+          <input type="text" id="full_name" name="full_name" required class="form-control" placeholder="John Doe">
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="form-label fw-bold">Email</label>
+          <input type="email" id="email" name="email" required class="form-control" placeholder="you@example.com">
+        </div>
+
+        <div class="mb-4">
+          <label for="phone" class="form-label fw-bold">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required class="form-control" placeholder="+254 700 123456">
+        </div>
+
+        <div class="mb-4">
+          <label for="details" class="form-label fw-bold">Project Details</label>
+          <textarea id="details" name="details" rows="4" class="form-control" placeholder="Describe your development or renovation needs..."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+      </form>
+    </div>
+  </div>
+
+
+
+     <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+  <!-- Bootstrap JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script to toggle property type options -->
+  <script>
+    const propertyType = document.getElementById('property_type');
+    const residentialOptions = document.getElementById('residential-options');
+    const commercialOptions = document.getElementById('commercial-options');
+    const landOptions = document.getElementById('land-options');
+
+    propertyType.addEventListener('change', function() {
+      residentialOptions.classList.add('d-none');
+      commercialOptions.classList.add('d-none');
+      landOptions.classList.add('d-none');
+
+      if (this.value === 'residential') {
+        residentialOptions.classList.remove('d-none');
+      } else if (this.value === 'commercial') {
+        commercialOptions.classList.remove('d-none');
+      } else if (this.value === 'land') {
+        landOptions.classList.remove('d-none');
+      }
+    });
+  </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const alert = document.getElementById("success-alert");
+    if (alert) {
+      setTimeout(() => {
+        let bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+      }, 3000); // 3 seconds
+    }
+  });
+</script>
+</body>
+</html>
+
+

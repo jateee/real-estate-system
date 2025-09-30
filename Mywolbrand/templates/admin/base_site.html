@@ -1,0 +1,96 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|default:"en" }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}{{ site_title|default:_('Django site admin') }}{% endblock %}</title>
+
+    {# Django admin CSS (base and admin widgets) - adjust paths if your STATIC settings differ #}
+    <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/responsive.css' %}">
+
+    {# Your custom admin CSS (loaded after default admin CSS so it can override) #}
+    <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+
+    {% block extrastyle %}{% endblock %}
+</head>
+<body class="app-admin">
+
+    <div id="header">
+        <div class="container-fluid">
+            <div id="branding">
+                <h1 id="site-name">
+                    <a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
+                </h1>
+            </div>
+
+            <div id="user-tools" class="user-tools">
+                {% if user.is_authenticated %}
+                    {% trans "Welcome," %} <strong>{{ user.get_username }}</strong> —
+                    <a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a>
+                {% else %}
+                    <a href="{% url 'admin:login' %}">{% trans "Log in" %}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="main" class="container-fluid">
+        <div id="content" class="row">
+            <div id="content-main" class="col">
+                {# Title / index title #}
+                <h2 id="site-title">
+                    {% block site_title %}{{ site_title|default:_('Site administration') }}{% endblock %}
+                </h2>
+
+                {# Place to show messages from admin views #}
+                {% if messages %}
+                    <ul class="messagelist">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {# Content block admin pages should fill #}
+                <div id="content-body">
+                    {% block content %}
+                    <!-- Default content fallback (can be overridden by admin views/templates) -->
+                    <div class="app-content">
+                        <p>{% trans "Welcome to the administration area." %}</p>
+                        <p><a href="{% url 'admin:auth_user_changelist' %}">{% trans "Manage users" %}</a></p>
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+
+            {# Optional sidebar - you can remove or modify #}
+            <aside id="nav-sidebar" class="col sidebar">
+                {% block sidebar %}
+                <div class="module">
+                    <h3>{% trans "Quick links" %}</h3>
+                    <ul>
+                        <li><a href="{% url 'admin:index' %}">{% trans "Dashboard" %}</a></li>
+                        <li><a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a></li>
+                    </ul>
+                </div>
+                {% endblock %}
+            </aside>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container-fluid">
+            <p class="credits">{% block footer %}{% trans "Django administration" %}{% endblock %}</p>
+        </div>
+    </div>
+
+    {# Admin JavaScript (optional) #}
+    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'admin/js/core.js' %}"></script>
+    {% block extrahead %}{% endblock %}
+</body>
+</html>
+

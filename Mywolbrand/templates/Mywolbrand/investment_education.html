@@ -1,0 +1,409 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Education | WolBrand.Inn</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <style>
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Hero Overlay */
+    .hero-overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      border-radius: 16px;
+      padding: 3rem;
+      max-width: 1000px;
+      margin: auto;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease-in-out;
+    }
+    .hero-overlay:hover {
+      transform: scale(1.02);
+    }
+
+    h1, h2 {
+      font-weight: bold;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #1E90FF, #4da6ff);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0056b3, #1E90FF);
+    }
+
+    .btn-lg {
+      border-radius: 30px;
+      padding: 0.7rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+    .btn-lg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 6px 16px rgba(0,0,0,0.35);
+    }
+
+    /* Unified transparent dark cards */
+    .info-card {
+      border: none;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+    }
+
+    .section-title {
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ddd;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #4da6ff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #1E90FF;
+    }
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+
+    /* Cookie consent */
+    .cookie-consent {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.95);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 9999;
+      max-width: 900px;
+      margin: auto;
+    }
+    .hidden { display: none; }
+    .cookie-consent a { color: #4da6ff; text-decoration: underline; }
+    .cookie-consent a:hover { color: #1E90FF; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4" href="{% url 'index' %}">WolBrand.Inn</a>
+      <div class="ms-auto">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+          <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+          <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+        {% else %}
+          <a href="{% url 'index' %}" class="btn btn-outline-light btn-sm">Home Page</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+<!-- Hero Section -->
+<div class="container text-center py-5">
+  <div class="hero-overlay">
+    <h1 class="display-5 fw-bold">Invest With Confidence</h1>
+    <p class="lead mt-3">
+      At <strong>WalBrand.Inn</strong>, we transform real estate into profitable opportunities.  
+      Join us in shaping sustainable growth, building communities, and securing long-term financial success.  
+    </p>
+  </div>
+</div>
+
+
+  <!-- Main Content -->
+  <main class="container">
+
+    <!-- What is Investing -->
+    <section class="mb-5">
+      <h2 class="section-title text-center mb-4"> Why WallBrand.Inn?</h2>
+      <p class="fs-5">
+        At WalBrand.Inn, we believe real estate is more than property — it’s an opportunity to create wealth, stability, and impact.
+      </p>
+    </section>
+
+
+    <!-- Types of Investments -->
+<section class="mb-5">
+  <h2 class="section-title text-center mb-4">Types of Real Estate Investments</h2>
+  <div class="row g-4">
+    
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Residential Properties</h5>
+        <p>Invest in houses, apartments, and rental units that provide steady income and long-term value appreciation.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Commercial Real Estate</h5>
+        <p>Offices, retail spaces, and business hubs offering higher rental yields and stable corporate tenants.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Land Investments</h5>
+        <p>Secure prime land for future development or resale at appreciated market value.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Property Development</h5>
+        <p>Partner with us in developing housing projects, estates, and commercial buildings with high growth potential.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Vacation & Short-Stay Rentals</h5>
+        <p>Capitalize on the booming hospitality sector by investing in furnished rentals and Airbnb-style properties.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <h5 class="fw-bold">Real Estate Partnerships</h5>
+        <p>Join hands with WalBrand.Inn through co-investment or joint ventures, lowering risk while sharing strong returns.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- Benefits of Investing in WallBrand -->
+    <section class="mb-5">
+      <h2 class="section-title text-center mb-4"> Why Invest With WalBrand.Inn?</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Strong Market Potential: Real estate continues to be one of the most resilient and rewarding sectors globally. With increasing demand for residential, commercial, and rental properties, the industry offers consistent long-term returns.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Secure and Transparent Platform: WalBrand.Inn emphasizes trust and accountability. Through user verification, transparent processes, and fraud-prevention measures, we ensure safe and reliable transactions for all stakeholders.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Experienced and Dedicated Team: WalBrand.Inn is led by professionals with expertise in real estate, technology, and finance. Our team is committed to building a platform that creates value for users and investors alike.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Long-Term Vision: We are focused on building more than a platform; we are shaping the future of real estate investment. Our commitment to responsible development, sustainability, and innovation ensures lasting impact for investors, communities, and markets.</div></div>
+      </div>
+    </section>
+
+    <!-- Benefits of Investors -->
+    <section class="mb-5">
+      <h2 class="section-title text-center mb-4"> Benefits of Investors</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Early growth advantage: Opportunity to invest at a strategic stage of development.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Clear Value Proposition: Scalable business model with strong community growth.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Strategic Exit Opportunities: Potential for acquisition, partnerships, or IPO in the future.</div></div>
+        <div class="col-md-6 col-lg-3"><div class="info-card h-100">Robust Risk Management: Transparent systems and diversified revenue streams.</div></div>
+      </div>
+    </section>
+
+    <!-- Getting Started -->          
+<section class="mb-5">
+  <h2 class="section-title text-center mb-4">How to Get Started</h2>
+  <div class="row g-4">
+
+    <div class="col-md-6 col-lg-3">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <p class="fw-bold mb-2">1</p>
+        <p class="mb-0">Create your free account with WalBrand.Inn and explore available opportunities.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <p class="fw-bold mb-2">2</p>
+        <p class="mb-0">Browse properties or investment projects that align with your goals.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <p class="fw-bold mb-2">3</p>
+        <p class="mb-0">Review details such as location, pricing, returns, and property status.</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="info-card h-100 p-3 shadow-sm rounded">
+        <p class="fw-bold mb-2">4</p>
+        <p class="mb-0">Place your investment or bid securely through our platform.</p>
+      </div>
+    </div>
+
+  
+
+  </div>
+</section>
+    
+
+    <!-- Call to Action -->
+    <section class="text-center my-5">
+      <h3 class="fw-bold">Ready to Begin Your Investment Journey?</h3>
+      <p class="lead">We welcome partnerships with forward-thinking investors who share our vision for transforming the real estate industry. Together, we can create lasting value and sustainable growth.</p>
+      <a href="{% url 'become_partner' %}" class="btn btn-primary btn-lg px-5">Invest with us</a>
+    </section>
+
+  </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookieConsent" class="cookie-consent hidden">
+    <p>
+      We use cookies to improve your experience, secure your account, and personalize services.  
+      By clicking "Accept", you agree to our  
+      <a href="{% url 'cookie_policy' %}" class="fw-bold">Cookie Policy</a>.
+    </p>
+    <div class="mt-2 text-end">
+      <button id="acceptCookies" class="btn btn-success btn-sm">Accept</button>
+      <button id="declineCookies" class="btn btn-danger btn-sm">Decline</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap Icons + JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Cookie Consent Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!localStorage.getItem("cookieConsent")) {
+        document.getElementById("cookieConsent").classList.remove("hidden");
+      }
+
+      document.getElementById("acceptCookies").addEventListener("click", function () {
+        localStorage.setItem("cookieConsent", "accepted");
+        document.getElementById("cookieConsent").classList.add("hidden");
+      });
+
+      document.getElementById("declineCookies").addEventListener("click", function () {
+        localStorage.setItem("cookieConsent", "declined");
+        window.location.href = "{% url 'cookie_policy' %}";
+      });
+    });
+  </script>
+</body>
+</html>

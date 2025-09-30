@@ -1,0 +1,282 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}{% if site_name %}{{ site_name }} — {% endif %}{% trans "Privacy Policy" %}{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+
+  /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+      .policy-overlay {
+          background-color: rgba(0, 0, 0, 0.8);
+          color: white;
+          border-radius: 16px;
+          padding: 3rem;
+          max-width: 1000px;
+          margin: auto;
+          box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+          transition: transform 0.3s ease-in-out;
+      }
+
+      .policy-overlay:hover {
+          transform: scale(1.01);
+      }
+
+      h1, h2 {
+          color: #4da6ff;
+          font-weight: bold;
+      }
+
+      h2 {
+          margin-top: 2rem;
+          border-left: 5px solid #1E90FF;
+          padding-left: 12px;
+      }
+
+      p, li {
+          color: #e6e6e6;
+      }
+
+      ul {
+          list-style: disc;
+          padding-left: 1.5rem;
+      }
+
+      footer {
+          background: rgba(0, 0, 0, 0.9);
+          color: #ddd;
+          padding: 2rem 0;
+          margin-top: 3rem;
+      }
+
+      footer a {
+          color: #4da6ff;
+          text-decoration: none;
+      }
+      footer a:hover {
+          color: #1E90FF;
+      }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+          <a class="navbar-brand fw-bold fs-4" href="#">WalBrand.Inn</a>
+          <div class="ms-auto">
+              {% if user.is_authenticated %}
+                  <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+                  <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+                  <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+              {% else %}
+                  <a href="{% url 'index' %}" class="btn btn-outline-light btn-sm">Home Page</a>
+              {% endif %}
+          </div>
+      </div>
+  </nav>
+
+  <!-- Privacy Policy -->
+  <div class="container py-5">
+      <div class="policy-overlay">
+          <header class="text-center mb-4">
+              <h1>{% trans "Privacy Policy" %}</h1>
+
+          </header>
+
+          <!-- Sections -->
+          <section id="introduction">
+              <h2>1. Introduction</h2>
+              <p>{% blocktrans %}Welcome to WalBrand.Inn. We value your privacy and are committed to protecting your personal information in compliance with the Data Protection Act, 2019 (Laws of Kenya).{% endblocktrans %}</p>
+          </section>
+
+          <section id="data-we-collect">
+              <h2>2. Information we collect</h2>
+              <ul>
+                <li>Identity and contact details (name, email, phone)</li>
+                <li>Account information (username, password)</li>
+                <li>Payment information — processed securely by M-Pesa or banks regulated by the Central Bank of Kenya (CBK)</li>
+                <li>Property listings, inquiries, and related content you provide</li>
+                <li>Usage data (pages visited, session duration, feature interactions)</li>
+                <li>Device and connection data (IP address, browser, OS)</li>
+                <li>Cookies and similar technologies</li>
+              </ul>
+          </section>
+
+          <section id="how-we-use">
+              <h2>3. How we use your information</h2>
+              <ul>
+                  <li>To provide and improve our services</li>
+                  <li>To process payments in compliance with CBK and AML laws</li>
+                  <li>To respond to your requests and support needs</li>
+                  <li>To send service-related notifications and updates</li>
+                  <li>To comply with Kenyan legal obligations</li>
+              </ul>
+          </section>
+
+          <section id="legal-basis">
+              <h2>4. Legal basis for processing</h2>
+              <p>We process personal data lawfully under the Data Protection Act, 2019, based on consent, contract performance, legal obligations, and legitimate interests.</p>
+          </section>
+
+          <section id="sharing">
+              <h2>5. Sharing and disclosure</h2>
+              <p>We may share your information with service providers, regulators, or law enforcement when required under Kenyan law.</p>
+          </section>
+
+          <section id="cookies">
+              <h2>6. Cookies</h2>
+              <p>We use cookies to enhance functionality and analytics. You may manage cookies through your browser or our cookie consent tool.</p>
+          </section>
+
+          <section id="security">
+              <h2>7. Data security</h2>
+              <p>We use security safeguards as required under the Data Protection Act, 2019. Users should also protect their credentials and use strong passwords.</p>
+          </section>
+
+          <section id="retention">
+              <h2>8. Data retention</h2>
+              <p>We retain personal data only as long as necessary to provide services, comply with legal obligations, or resolve disputes.</p>
+          </section>
+
+          <section id="rights">
+              <h2>9. Your rights</h2>
+              <ul>
+                  <li>Right to be informed</li>
+                  <li>Right of access</li>
+                  <li>Right to correction or deletion</li>
+                  <li>Right to object to processing or withdraw consent</li>
+                  <li>Right to data portability (where applicable)</li>
+              </ul>
+              <p>You may also lodge a complaint with the Office of the Data Protection Commissioner (ODPC) in Kenya.</p>
+          </section>
+
+          <section id="transfers">
+              <h2>10. International transfers</h2>
+              <p>If we transfer your personal data outside Kenya, we ensure safeguards under Section 48 of the Data Protection Act, 2019.</p>
+          </section>
+
+          <section id="children">
+              <h2>11. Children</h2>
+              <p>Our services are not directed to children under 18. We do not knowingly collect personal information from minors without parental consent.</p>
+          </section>
+
+          <section id="changes">
+              <h2>12. Changes to this policy</h2>
+              <p>We may update this policy from time to time to remain compliant with Kenyan law. Updates will be posted with a new effective date.</p>
+          </section>
+
+          <section id="contact">
+              <h2>13. Contact us</h2>
+              <p>{% blocktrans %}If you have questions about this policy, contact WolBrand.Inn Ltd at "privacy@WallBrand.inn.com" or by mail Nairobi, Kenya.{% endblocktrans %}</p>
+              <p>Effective from 15.09.2025</p>
+          </section>
+      </div>
+  </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

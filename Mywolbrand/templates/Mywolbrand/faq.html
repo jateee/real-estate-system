@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | WalBrand.Inn</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <style>
+    @keyframes moveBackgroundVertical {
+      from { background-position: 0 0; }
+      to { background-position: 0 100%; }
+    }
+
+    body {
+      background-color: #2d73fd;
+      background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+      background-attachment: fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      animation: moveBackgroundVertical 40s linear infinite;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* FAQ container */
+    .faq-card {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      margin-top: 2rem;
+    }
+
+    details {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    summary {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .meta {
+      color: #ddd;
+      margin-top: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ddd;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    footer a { color: #4da6ff; text-decoration: none; }
+    footer a:hover { color: #1E90FF; }
+
+    
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4" href="{% url 'index' %}">WalBrand.Inn</a>
+      <div class="ms-auto">
+        <a href="{% url 'index' %}" class="btn btn-outline-light btn-sm me-2">Home Page</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+          <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+          <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+        {% else %}
+         <!---Login button Here--> 
+          <!---Login button Here-->
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- FAQ Section -->
+  <div class="container">
+    <div class="faq-card">
+      <h1 class="text-center mb-4">Frequently Asked Questions</h1>
+      <p class="lead text-center mb-5">Find answers to common questions about us today!</p>
+
+      <details open>
+        <summary>What types of properties do you list?</summary>
+        <div class="meta">
+          We list residential, commercial, and rental properties, including houses, apartments, condos, land, and office spaces.
+        </div>
+      </details>
+
+      <details>
+        <summary>What fees are involved in selling a home?</summary>
+        <div class="meta">
+          Typical selling costs include agent commissions (10%).
+        </div>
+      </details>
+
+      <details>
+        <summary>Do you help with rentals and property management?</summary>
+        <div class="meta">
+          Yes, we manage rentals and full property management packages with transparent fees. For more details, login to you account Menu.
+        </div>
+      </details>
+
+      <details>
+        <summary>How often are listings updated?</summary>
+        <div class="meta">
+          Our listings are updated daily to ensure you have the most accurate information on availability and pricing.
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I make an offer/negotiate on a property?</summary>
+        <div class="meta">
+          You can submit an offer/negotiate directly by bidding through our website and we will reach out to you.
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I list my property?</summary>
+        <div class="meta">
+          Click on “Sell Your Property” and complete the listing form with property details, photo, and pricing. Our team may review the details.
+        </div>
+      </details>
+
+      <details>
+        <summary>Are owners verified?</summary>
+        <div class="meta">
+          Yes, all owners are verified to ensure legitimacy. Verified owners have a tag attached to them.
+        </div>
+      </details>
+
+      
+      <details>
+        <summary>Do I need an account to browse listings?</summary>
+        <div class="meta">
+          Yes, creating an account allows you to get the ultimate experience to you as our esteemed customer.
+        </div>
+      </details>
+
+      
+      <details>
+        <summary>How do I contact customer support?</summary>
+        <div class="meta">
+          You can reach our support team via the “Contact Us” page or by calling our helpline listed on the website.
+        </div>
+      </details>
+    </div>
+  </div>
+
+     <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

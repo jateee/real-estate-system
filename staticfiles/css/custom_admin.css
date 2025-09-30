@@ -1,0 +1,72 @@
+/* Background */
+body {
+    background-color: #2d73fd;
+    background: url("/static/images/background.PNG") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+}
+
+/* Header styling */
+#header {
+    background: rgba(0,0,0,0.6);
+    border-bottom: 2px solid #2d73fd;
+}
+
+/* Branding */
+#site-name a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Sidebar */
+#nav-sidebar {
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+}
+
+/* Footer */
+#footer {
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    text-align: center;
+    color: #ddd;
+}
+
+/* Login page background */
+body.login-page {
+    background: url("static/images/background.PNG") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Login container */
+#login-container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* Login button */
+.btn-login {
+    background-color: #2d73fd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-login:hover {
+    background-color: #1b4dcc;
+}

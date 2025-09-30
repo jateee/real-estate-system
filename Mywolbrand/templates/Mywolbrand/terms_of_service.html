@@ -1,0 +1,304 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% if site_name %}{{ site_name }} — {% endif %}{% trans "Terms of Service" %}{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+
+      .navbar {
+          background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      }
+
+      .terms-overlay {
+          background-color: rgba(0, 0, 0, 0.75);
+          color: white;
+          border-radius: 16px;
+          padding: 3rem;
+          max-width: 1000px;
+          margin: auto;
+          box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+          transition: transform 0.3s ease-in-out;
+      }
+
+      .terms-overlay:hover {
+          transform: scale(1.01);
+      }
+
+      h1, h2 {
+          color: #4da6ff;
+          font-weight: bold;
+      }
+
+      h2 {
+          margin-top: 2rem;
+          border-left: 5px solid #1E90FF;
+          padding-left: 12px;
+      }
+
+      p, li {
+          color: #e6e6e6;
+      }
+
+      ul {
+          list-style: disc;
+          padding-left: 1.5rem;
+      }
+
+      footer {
+          background: rgba(0, 0, 0, 0.9);
+          color: #ddd;
+          padding: 2rem 0;
+          margin-top: 3rem;
+      }
+
+      footer a {
+          color: #4da6ff;
+          text-decoration: none;
+      }
+      footer a:hover {
+          color: #1E90FF;
+      }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+          <a class="navbar-brand fw-bold fs-4" href="#">WolBrand.Inn</a>
+          <div class="ms-auto">
+              {% if user.is_authenticated %}
+                  <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+                  <a href="{% url 'contactus' %}" class="btn btn-outline-light btn-sm me-2">Contact Us</a>
+                  <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+              {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
+              {% endif %}
+          </div>
+      </div>
+  </nav>
+
+  <!-- Terms of Service -->
+  <div class="container py-5">
+      <div class="terms-overlay">
+          <header class="text-center mb-4">
+              <h1>{% trans "Terms of Service" %}</h1>
+              <p class="effective-date">{% trans "Effective date:" %} {{ effective_date|default:"YYYY-MM-DD" }}</p>
+          </header>
+
+          <!-- Sections -->
+          <section id="introduction">
+              <h2>1. Introduction</h2>
+              <p>{% blocktrans %}Welcome to {{ site_name|default:_("WolBrand.Inn") }}. These Terms of Service ("Terms") govern your access to and use of our website, mobile apps, and other services (collectively, the "Service"). By using the Service you agree to these Terms.{% endblocktrans %}</p>
+          </section>
+
+          <section id="definitions">
+              <h2>2. Definitions</h2>
+              <ul>
+                  <li><strong>Listings:</strong> Property adverts, descriptions, photos, and related information posted on the Service.</li>
+                  <li><strong>Users:</strong> Individuals or entities who browse, list, contact, or transact through the Service.</li>
+                  <li><strong>Agents:</strong> Real estate professionals who list or manage properties on the Service.</li>
+              </ul>
+          </section>
+
+          <section id="eligibility">
+              <h2>3. Eligibility</h2>
+              <p>You must be at least 18 years old and legally capable of entering into contracts under the Kenyan Law of Contract Act (Cap 23, Laws of Kenya).</p>
+          </section>
+
+          <section id="account-registration">
+              <h2>4. Account registration</h2>
+              <p>To access certain features you may need to create an account. You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account.</p>
+          </section>
+
+          <section id="listings">
+              <h2>5. Listings and property information</h2>
+              <p>Users who create listings represent and warrant that they have the right to list the property and that the information provided is accurate.</p>
+              <p>We do not guarantee the accuracy, completeness, or availability of listings; users should verify all information independently before relying on it.</p>
+          </section>
+
+          <section id="user-conduct">
+              <h2>6. User conduct</h2>
+              <p>When using the Service you agree not to:</p>
+              <ul>
+                  <li>Post false, misleading, or fraudulent listings or messages.</li>
+                  <li>Use the Service for unlawful purposes or unauthorized commercial purposes.</li>
+                  <li>Attempt to access other users' accounts or data.</li>
+                  <li>Circumvent technical restrictions or harm the Service.</li>
+              </ul>
+          </section>
+
+          <section id="transactions-payments">
+              <h2>7. Transactions & Payments</h2>
+              <p>The Service may assist in connecting buyers, sellers, landlords, and tenants. Any financial transaction is conducted between the parties and processed by third-party payment providers.</p>
+              <p>All monetary transactions are subject to the Central Bank of Kenya (CBK) regulations and anti-money laundering laws. Mobile money transactions (e.g., M-Pesa) are governed by Safaricom’s terms of service.</p>
+              <p>We are not a party to transactions between users and do not hold funds unless explicitly stated.</p>
+          </section>
+
+          <section id="property-visits-safety">
+              <h2>8. Property visits & safety</h2>
+              <p>Users arranging property visits must follow safety best practices. The Service is not responsible for injury, loss, or damage during property visits.</p>
+          </section>
+
+          <section id="intellectual-property">
+              <h2>9. Intellectual property</h2>
+              <p>All content on the Service, including logos, text, images, and design, is owned or licensed by us unless otherwise stated. You may view and print content for personal, non-commercial use only.</p>
+              <p>If you submit content (e.g., photos), you grant us a worldwide, royalty-free license to use and display it in connection with the Service.</p>
+          </section>
+
+          <section id="third-party-services">
+              <h2>10. Third-party services</h2>
+              <p>We may integrate third-party services (payment processors, mapping, etc.). Their use is subject to their own terms and privacy policies.</p>
+          </section>
+
+          <section id="disclaimers">
+              <h2>11. Disclaimers</h2>
+              <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND. WE DISCLAIM ALL WARRANTIES, INCLUDING MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, TO THE MAXIMUM EXTENT PERMITTED BY LAW.</p>
+          </section>
+
+          <section id="limitation-of-liability">
+              <h2>12. Limitation of liability</h2>
+              <p>TO THE MAXIMUM EXTENT PERMITTED BY KENYAN LAW, WE ARE NOT LIABLE FOR ANY INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THE SERVICE.</p>
+          </section>
+
+          <section id="indemnification">
+              <h2>13. Indemnification</h2>
+              <p>You agree to indemnify and hold harmless {{ data_controller_name|default:"WolBrand.Inn Ltd" }} from any claims, losses, or damages arising from your use of the Service or violation of these Terms.</p>
+          </section>
+
+          <section id="termination">
+              <h2>14. Termination</h2>
+              <p>We may suspend or terminate your access at any time, with or without cause, including for violations of these Terms.</p>
+          </section>
+
+          <section id="governing-law">
+              <h2>15. Governing law</h2>
+              <p>These Terms are governed by the laws of Kenya.</p>
+          </section>
+
+          <section id="dispute-resolution">
+              <h2>16. Dispute resolution</h2>
+              <p>Disputes shall first be resolved amicably. If unresolved, disputes may be referred to arbitration under the Chartered Institute of Arbitrators (Kenya Branch) or the High Court of Kenya.</p>
+          </section>
+
+          <section id="changes-to-terms">
+              <h2>17. Changes to these Terms</h2>
+              <p>We may update these Terms from time to time. Continued use after changes constitutes acceptance of the updated Terms.</p>
+          </section>
+
+          <section id="privacy-policy-link">
+              <h2>18. Privacy</h2>
+              <p>Please review our <a href="{% url 'privacy_policy' %}" class="text-info">Privacy Policy</a> to understand how we handle your data.</p>
+          </section>
+
+          <section id="contact">
+              <h2>19. Contact information</h2>
+              <p>If you have questions, contact {{ data_controller_name|default:"WolBrand.Inn Ltd" }} at {{ contact_email|default:"support@myrealestate.co.ke" }}, or by mail: {{ company_address|default:"Nairobi, Kenya" }}.</p>
+          </section>
+      </div>
+  </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

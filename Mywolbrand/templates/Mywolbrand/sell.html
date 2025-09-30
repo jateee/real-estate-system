@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Property | WolBrand.Inn</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <style>
+@keyframes moveBackgroundVertical {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+body {
+    /* Background image with vertical animation */
+    background-color: #2d73fd;
+    background: url("{% static 'images/background.PNG' %}") no-repeat center center fixed;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+
+    /* Vertical movement animation */
+    animation: moveBackgroundVertical 40s linear infinite;
+}
+
+
+    .navbar {
+      background: linear-gradient(90deg, rgba(0, 56, 168, 0.95), rgba(0, 102, 204, 0.95));
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .sell-card {
+      background-color: rgba(0,0,0,0.7);
+      color: #fff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 650px;
+      margin: 5rem auto;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .sell-card h2 {
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1E90FF, #4da6ff);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0056b3, #1E90FF);
+    }
+
+    .btn-custom {
+      border-radius: 30px;
+      padding: 0.7rem 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 6px 16px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ddd;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #4da6ff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #1E90FF;
+    }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.4rem;
+            color: #4da6ff;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #1E90FF;
+        }
+
+        .social-icons a .bi-whatsapp {
+    color: #25D366; /* official WhatsApp green */
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-icons a .bi-whatsapp:hover {
+    color: #128C7E;
+}
+
+
+/* Twitter */
+.social-icons a .bi-twitter {
+    color: #1DA1F2;
+}
+.social-icons a .bi-twitter:hover {
+    color: #0d8ddb;
+}
+
+/* Instagram */
+.social-icons a .bi-instagram {
+    color: #E4405F; /* Instagram pink */
+}
+.social-icons a .bi-instagram:hover {
+    color: #d62a52;
+}
+
+/* LinkedIn */
+.social-icons a .bi-linkedin {
+    color: #0077B5;
+}
+.social-icons a .bi-linkedin:hover {
+    color: #005582;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4" href="{% url 'index' %}">WolBrand.Inn</a>
+      <div class="ms-auto">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-sm me-2">Dashboard</a>
+          <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sell Form Section -->
+  <div class="sell-card">
+    <h2>Sell Your Property</h2>
+
+    <!-- Success messages -->
+    {% if messages %}
+      <div class="mt-2">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Sell form -->
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="id_title" class="form-label">Property Name</label>
+        <input type="text" name="title" id="id_title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_description" class="form-label">Property Description</label>
+        <textarea name="description" id="id_description" class="form-control" rows="4" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_price" class="form-label">Price</label>
+        <input type="number" name="price" id="id_price" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Commission (10%)</label>
+        <input type="text" id="id_commission" class="form-control" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Final Price (Price + Commission)</label>
+        <input type="text" id="id_final_price" class="form-control" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_image" class="form-label">Upload Image</label>
+        <input type="file" name="image" id="id_image" class="form-control" accept="image/*" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_ownership_proof" class="form-label">Ownership Proof</label>
+        <input type="file" name="ownership_proof" id="id_ownership_proof" class="form-control" accept="application/pdf,image/*" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_category" class="form-label">Category</label>
+        <select name="category" id="id_category" class="form-control" required>
+          <option value="">Select Category</option>
+          <option value="residential">Residential</option>
+          <option value="commercial">Commercial</option>
+          <option value="land">Land</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_location" class="form-label">Location</label>
+        <input type="text" name="location" id="id_location" class="form-control" placeholder="e.g. Nairobi, Kenya" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="id_house_type" class="form-label">House Type</label>
+        <select name="house_type" id="id_house_type" class="form-control" required>
+          <option value="">Select House Type</option>
+          <option value="apartment">Apartment</option>
+          <option value="bungalow">Bungalow</option>
+          <option value="villa">Villa</option>
+          <option value="duplex">Duplex</option>
+          <option value="mansion">Mansion</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-custom">Submit Property</button>
+      </div>
+    </form>
+  </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 WolBrand.Inn | All Rights Reserved</p>
+            <p class="mb-2">
+                <a href="{% url 'contactus' %}">Contact Us</a> |  
+                <a href="{% url 'privacy_policy' %}">Privacy Policy</a> | 
+                <a href="{% url 'terms_of_service' %}">Terms of service</a>  
+                
+            </p>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://wa.me/+254113906162" target="_blank" title="Chat on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+                    <a href="#" title="Twitter">
+        <i class="bi bi-twitter"></i>
+    </a>
+    <a href="#" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="#" title="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+    </a>
+</div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Bootstrap JS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Auto Commission + Final Price Script -->
+  <script>
+    document.getElementById("id_price").addEventListener("input", function() {
+      let price = parseFloat(this.value);
+      if (!isNaN(price)) {
+        let commission = price * 0.10;
+        let finalPrice = price + commission;
+
+        document.getElementById("id_commission").value = commission.toLocaleString("en-US", {
+          minimumFractionDigits: 2, maximumFractionDigits: 2
+        });
+        document.getElementById("id_final_price").value = finalPrice.toLocaleString("en-US", {
+          minimumFractionDigits: 2, maximumFractionDigits: 2
+        });
+      } else {
+        document.getElementById("id_commission").value = "";
+        document.getElementById("id_final_price").value = "";
+      }
+    });
+  </script>
+</body>
+</html>
