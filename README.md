@@ -1,4 +1,4 @@
-Download the folder. Open cmd. Then type the following;
+Open cmd via the folder. Then type the following;
 cd
 python -m venv Myenv
 Myenv\Scripts\activate
